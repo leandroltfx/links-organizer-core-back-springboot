@@ -2,6 +2,9 @@ package br.com.links_organizer_core_back_springboot.modules.user.controllers;
 
 import br.com.links_organizer_core_back_springboot.modules.user.model.dto.UserRegistrationRequestDto;
 import br.com.links_organizer_core_back_springboot.modules.user.model.dto.UserRegistrationResponseDto;
+
+import jakarta.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +18,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserRegistrationResponseDto> registerUser(
-            @RequestBody UserRegistrationRequestDto userRegistrationRequestDto
+            @Valid @RequestBody UserRegistrationRequestDto userRegistrationRequestDto
     ) {
         UserRegistrationResponseDto userRegistrationResponseDto = UserRegistrationResponseDto.builder()
                 .message("Usuário cadastrado com sucesso!")

@@ -1,5 +1,7 @@
 package br.com.links_organizer_core_back_springboot.modules.user.model.dto;
 
+import jakarta.validation.constraints.Pattern;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,8 +13,22 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserRegistrationRequestDto {
 
+    @Pattern(
+            regexp = "^[A-Za-z][A-Za-z0-9]{2,29}$",
+            message = "O nome de usuário deve ter entre 3 e 30 caracteres, começar com uma letra e conter apenas letras e números (sem espaços ou símbolos)."
+    )
     private String userName;
+
+    @Pattern(
+            regexp = "^(?=.{1,254}$)[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
+            message = "Digite um e-mail válido no formato \"exemplo@dominio.com\" sem ultrapassar 254 caracteres."
+    )
     private String email;
+
+    @Pattern(
+            regexp = "^.{8,80}$",
+            message = "A senha deve ter entre 8 e 80 caracteres."
+    )
     private String password;
 
 }
