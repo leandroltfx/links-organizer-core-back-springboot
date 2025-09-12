@@ -16,7 +16,7 @@ public class GlobalExceptionHandler {
             MethodArgumentNotValidException exception
     ) {
 
-        ErrorDto errorDto = new ErrorDto("Campos informados inválidos.");
+        ErrorDto errorDto = new ErrorDto("Dados inválidos.");
 
         exception.getBindingResult().getFieldErrors().forEach(err -> {
             ErrorFieldDto errorFieldDto = new ErrorFieldDto(err.getField(), err.getDefaultMessage());
