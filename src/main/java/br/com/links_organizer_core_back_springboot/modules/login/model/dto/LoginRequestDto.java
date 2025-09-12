@@ -1,5 +1,6 @@
 package br.com.links_organizer_core_back_springboot.modules.login.model.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +12,14 @@ import lombok.NoArgsConstructor;
 @Builder
 public class LoginRequestDto {
 
+    @NotBlank(
+            message = "Informe o e-mail"
+    )
     private String email;
+
+    @NotBlank(
+            message = "Informe a senha"
+    )
     private String password;
 
 }

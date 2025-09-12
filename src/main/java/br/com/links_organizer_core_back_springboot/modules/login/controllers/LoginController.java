@@ -2,6 +2,7 @@ package br.com.links_organizer_core_back_springboot.modules.login.controllers;
 
 import br.com.links_organizer_core_back_springboot.modules.login.model.dto.LoginRequestDto;
 import br.com.links_organizer_core_back_springboot.modules.login.model.dto.LoginResponseDto;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,7 @@ public class LoginController {
 
     @PostMapping
     public ResponseEntity<Object> login(
-            @RequestBody LoginRequestDto loginRequestDto
+            @Valid @RequestBody LoginRequestDto loginRequestDto
     ) {
         LoginResponseDto loginResponseDto = LoginResponseDto.builder()
                 .message("Login realizado com sucesso!")
