@@ -8,6 +8,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.net.ConnectException;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -24,6 +26,20 @@ public class GlobalExceptionHandler {
         });
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorDto);
+    }
+
+    @ExceptionHandler(UserFoundException.class)
+    public ResponseEntity<ErrorDto> userFoundExceptionHandler(
+        UserFoundException userFoundException
+    ) {
+        ErrorDto errorDto = new ErrorDto(userFoundException.getMessage());
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(errorDto);
+    }
+
+    @ExceptionHandler(ConnectException.class)
+    public ResponseEntity<ErrorDto> connectExceptionHandler() {
+        ErrorDto errorDto = new ErrorDto("Ocorreu um erro interno, tente novamente.");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorDto);
     }
 
 }
