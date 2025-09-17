@@ -11,7 +11,14 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         // Desabilitando as configurações padrão do Spring Security
-        httpSecurity.csrf(csrf -> csrf.disable());
+        httpSecurity
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> {
+                    // Rotas públicas
+                    auth
+                            .requestMatchers("/login").permitAll()
+                            .requestMatchers("/user").permitAll();
+                });
         return httpSecurity.build();
     }
 
