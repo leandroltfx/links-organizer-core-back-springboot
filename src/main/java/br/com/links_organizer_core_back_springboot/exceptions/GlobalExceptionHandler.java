@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.naming.AuthenticationException;
 import java.net.ConnectException;
 
 @ControllerAdvice
@@ -40,6 +41,22 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorDto> connectExceptionHandler() {
         ErrorDto errorDto = new ErrorDto("Ocorreu um erro interno, tente novamente.");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorDto);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ErrorDto> authenticationExceptionHandler(
+            AuthenticationException authenticationException
+    ) {
+        ErrorDto errorDto = new ErrorDto(authenticationException.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorDto);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorDto> userNotFoundException(
+            UserNotFoundException userNotFoundException
+    ) {
+        ErrorDto errorDto = new ErrorDto(userNotFoundException.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorDto);
     }
 
 }

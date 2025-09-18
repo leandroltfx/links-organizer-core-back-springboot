@@ -1,8 +1,9 @@
 package br.com.links_organizer_core_back_springboot.modules.login.controllers;
 
 import br.com.links_organizer_core_back_springboot.modules.login.model.dto.LoginRequestDto;
-import br.com.links_organizer_core_back_springboot.modules.login.model.dto.LoginResponseDto;
+import br.com.links_organizer_core_back_springboot.modules.login.useCases.LoginUseCase;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,19 +11,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.naming.AuthenticationException;
+
 @RestController
 @RequestMapping("/login")
 public class LoginController {
 
+    @Autowired
+    private LoginUseCase loginUseCase;
+
     @PostMapping
     public ResponseEntity<Object> login(
             @Valid @RequestBody LoginRequestDto loginRequestDto
-    ) {
-        LoginResponseDto loginResponseDto = LoginResponseDto.builder()
-                .message("Login realizado com sucesso!")
-                .token("token")
-                .build();
-        return ResponseEntity.status(HttpStatus.OK).body(loginResponseDto);
+    ) throws AuthenticationException {
+        return ResponseEntity.status(HttpStatus.OK).body(this.loginUseCase.execute(loginRequestDto));
     }
 
 }
