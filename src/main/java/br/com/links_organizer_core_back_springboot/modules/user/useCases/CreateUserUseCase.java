@@ -4,6 +4,9 @@ import br.com.links_organizer_core_back_springboot.exceptions.UserFoundException
 import br.com.links_organizer_core_back_springboot.modules.user.entities.UserEntity;
 import br.com.links_organizer_core_back_springboot.modules.user.model.dto.UserRegistrationResponseDto;
 import br.com.links_organizer_core_back_springboot.modules.user.repositories.UserRepository;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,10 +30,21 @@ public class CreateUserUseCase {
 
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
 
-        this.userRepository.save(userEntity);
+        var user = this.userRepository.save(userEntity);
+
+        Dotenv dotenv = Dotenv.load();
+        String secret = dotenv.get("JWT_SECRET");
+
+        Algorithm algorithm = Algorithm.HMAC256(secret);
+        var token = JWT
+                .create()
+                .withIssuer("linksorganizer")
+                .withSubject(user.getId().toString())
+                .sign(algorithm);
+
         return UserRegistrationResponseDto
                 .builder()
-                .token("token")
+                .token(token)
                 .message("Usuário cadastrado com sucesso!")
                 .build();
     }
