@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.naming.AuthenticationException;
+import java.time.Duration;
+import java.time.Instant;
 
 @Service
 public class LoginUseCase {
@@ -40,15 +42,18 @@ public class LoginUseCase {
         String secret = dotenv.get("JWT_SECRET");
 
         Algorithm algorithm = Algorithm.HMAC256(secret);
+        var expiresIn = Instant.now().plus(Duration.ofMinutes(10));
         var token = JWT
                 .create()
                 .withIssuer("linksorganizer")
                 .withSubject(user.getId().toString())
+                .withExpiresAt(expiresIn)
                 .sign(algorithm);
 
         return LoginResponseDto.builder()
                 .message("Login realizado com sucesso!")
-                .token(token)
+                .access_token(token)
+                .expires_in(expiresIn.toEpochMilli())
                 .build();
     }
 

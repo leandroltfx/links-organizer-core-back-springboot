@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class UserRegistrationResponseDto {
 
     private String message;
-    private String token;
+    private String access_token;
+    private Long expires_in;
 
 }

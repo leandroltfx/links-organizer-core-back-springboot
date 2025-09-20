@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.Instant;
+
 @Service
 public class CreateUserUseCase {
 
@@ -36,15 +39,18 @@ public class CreateUserUseCase {
         String secret = dotenv.get("JWT_SECRET");
 
         Algorithm algorithm = Algorithm.HMAC256(secret);
+        var expiresIn = Instant.now().plus(Duration.ofMinutes(10));
         var token = JWT
                 .create()
                 .withIssuer("linksorganizer")
                 .withSubject(user.getId().toString())
+                .withExpiresAt(expiresIn)
                 .sign(algorithm);
 
         return UserRegistrationResponseDto
                 .builder()
-                .token(token)
+                .access_token(token)
+                .expires_in(expiresIn.toEpochMilli())
                 .message("Usuário cadastrado com sucesso!")
                 .build();
     }
