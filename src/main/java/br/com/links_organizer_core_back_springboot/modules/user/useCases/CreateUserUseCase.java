@@ -1,7 +1,7 @@
 package br.com.links_organizer_core_back_springboot.modules.user.useCases;
 
 import br.com.links_organizer_core_back_springboot.exceptions.UserFoundException;
-import br.com.links_organizer_core_back_springboot.modules.user.entities.UserEntity;
+import br.com.links_organizer_core_back_springboot.modules.user.model.entities.UserEntity;
 import br.com.links_organizer_core_back_springboot.modules.user.model.dto.UserRegistrationResponseDTO;
 import br.com.links_organizer_core_back_springboot.modules.user.repositories.UserRepository;
 import com.auth0.jwt.JWT;

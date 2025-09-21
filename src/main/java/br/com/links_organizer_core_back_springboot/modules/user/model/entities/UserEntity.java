@@ -1,4 +1,4 @@
-package br.com.links_organizer_core_back_springboot.modules.user.entities;
+package br.com.links_organizer_core_back_springboot.modules.user.model.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

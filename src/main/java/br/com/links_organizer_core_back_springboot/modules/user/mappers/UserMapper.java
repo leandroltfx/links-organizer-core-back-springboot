@@ -1,6 +1,6 @@
 package br.com.links_organizer_core_back_springboot.modules.user.mappers;
 
-import br.com.links_organizer_core_back_springboot.modules.user.entities.UserEntity;
+import br.com.links_organizer_core_back_springboot.modules.user.model.entities.UserEntity;
 import br.com.links_organizer_core_back_springboot.modules.user.model.dto.UserRegistrationRequestDTO;
 import org.springframework.stereotype.Service;
 
