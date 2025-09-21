@@ -1,6 +1,6 @@
 package br.com.links_organizer_core_back_springboot.modules.user.repositories;
 
-import br.com.links_organizer_core_back_springboot.modules.user.entities.UserEntity;
+import br.com.links_organizer_core_back_springboot.modules.user.model.entities.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,8 +1,8 @@
 package br.com.links_organizer_core_back_springboot.modules.login.useCases;
 
 import br.com.links_organizer_core_back_springboot.exceptions.UserNotFoundException;
-import br.com.links_organizer_core_back_springboot.modules.login.model.dto.LoginRequestDto;
-import br.com.links_organizer_core_back_springboot.modules.login.model.dto.LoginResponseDto;
+import br.com.links_organizer_core_back_springboot.modules.login.model.dto.LoginRequestDTO;
+import br.com.links_organizer_core_back_springboot.modules.login.model.dto.LoginResponseDTO;
 import br.com.links_organizer_core_back_springboot.modules.user.repositories.UserRepository;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.naming.AuthenticationException;
+import java.time.Duration;
+import java.time.Instant;
 
 @Service
 public class LoginUseCase {
@@ -22,8 +24,8 @@ public class LoginUseCase {
     @Autowired
     private UserRepository userRepository;
 
-    public LoginResponseDto execute(
-            LoginRequestDto loginRequestDto
+    public LoginResponseDTO execute(
+            LoginRequestDTO loginRequestDto
     ) throws AuthenticationException {
 
         var user = this.userRepository
@@ -40,15 +42,18 @@ public class LoginUseCase {
         String secret = dotenv.get("JWT_SECRET");
 
         Algorithm algorithm = Algorithm.HMAC256(secret);
+        var expiresIn = Instant.now().plus(Duration.ofMinutes(10));
         var token = JWT
                 .create()
                 .withIssuer("linksorganizer")
                 .withSubject(user.getId().toString())
+                .withExpiresAt(expiresIn)
                 .sign(algorithm);
 
-        return LoginResponseDto.builder()
+        return LoginResponseDTO.builder()
                 .message("Login realizado com sucesso!")
-                .token(token)
+                .access_token(token)
+                .expires_in(expiresIn.toEpochMilli())
                 .build();
     }
 

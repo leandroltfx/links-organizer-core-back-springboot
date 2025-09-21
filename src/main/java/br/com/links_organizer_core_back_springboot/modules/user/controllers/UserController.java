@@ -1,8 +1,8 @@
 package br.com.links_organizer_core_back_springboot.modules.user.controllers;
 
 import br.com.links_organizer_core_back_springboot.modules.user.mappers.UserMapper;
-import br.com.links_organizer_core_back_springboot.modules.user.model.dto.UserRegistrationRequestDto;
-import br.com.links_organizer_core_back_springboot.modules.user.model.dto.UserRegistrationResponseDto;
+import br.com.links_organizer_core_back_springboot.modules.user.model.dto.UserRegistrationRequestDTO;
+import br.com.links_organizer_core_back_springboot.modules.user.model.dto.UserRegistrationResponseDTO;
 import br.com.links_organizer_core_back_springboot.modules.user.useCases.CreateUserUseCase;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +24,8 @@ public class UserController {
     private UserMapper userMapper;
 
     @PostMapping
-    public ResponseEntity<UserRegistrationResponseDto> registerUser(
-            @Valid @RequestBody UserRegistrationRequestDto userRegistrationRequestDto
+    public ResponseEntity<UserRegistrationResponseDTO> registerUser(
+            @Valid @RequestBody UserRegistrationRequestDTO userRegistrationRequestDto
     ) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 this.createUserUseCase.execute(

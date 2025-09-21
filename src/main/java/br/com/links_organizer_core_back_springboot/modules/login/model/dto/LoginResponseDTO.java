@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LoginResponseDto {
+public class LoginResponseDTO {
 
     private String message;
-    private String token;
+    private String access_token;
+    private Long expires_in;
 
 }

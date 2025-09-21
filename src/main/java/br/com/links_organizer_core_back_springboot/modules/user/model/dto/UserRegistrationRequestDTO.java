@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserRegistrationRequestDto {
+public class UserRegistrationRequestDTO {
 
     @Pattern(
             regexp = "^[A-Za-z][A-Za-z0-9]{2,29}$",
