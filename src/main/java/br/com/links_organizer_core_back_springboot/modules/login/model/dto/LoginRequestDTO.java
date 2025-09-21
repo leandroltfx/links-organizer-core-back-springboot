@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LoginRequestDto {
+public class LoginRequestDTO {
 
     @NotBlank(
             message = "Informe o e-mail"

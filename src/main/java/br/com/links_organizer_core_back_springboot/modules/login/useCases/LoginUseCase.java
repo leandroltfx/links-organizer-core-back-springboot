@@ -1,8 +1,8 @@
 package br.com.links_organizer_core_back_springboot.modules.login.useCases;
 
 import br.com.links_organizer_core_back_springboot.exceptions.UserNotFoundException;
-import br.com.links_organizer_core_back_springboot.modules.login.model.dto.LoginRequestDto;
-import br.com.links_organizer_core_back_springboot.modules.login.model.dto.LoginResponseDto;
+import br.com.links_organizer_core_back_springboot.modules.login.model.dto.LoginRequestDTO;
+import br.com.links_organizer_core_back_springboot.modules.login.model.dto.LoginResponseDTO;
 import br.com.links_organizer_core_back_springboot.modules.user.repositories.UserRepository;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -24,8 +24,8 @@ public class LoginUseCase {
     @Autowired
     private UserRepository userRepository;
 
-    public LoginResponseDto execute(
-            LoginRequestDto loginRequestDto
+    public LoginResponseDTO execute(
+            LoginRequestDTO loginRequestDto
     ) throws AuthenticationException {
 
         var user = this.userRepository
@@ -50,7 +50,7 @@ public class LoginUseCase {
                 .withExpiresAt(expiresIn)
                 .sign(algorithm);
 
-        return LoginResponseDto.builder()
+        return LoginResponseDTO.builder()
                 .message("Login realizado com sucesso!")
                 .access_token(token)
                 .expires_in(expiresIn.toEpochMilli())

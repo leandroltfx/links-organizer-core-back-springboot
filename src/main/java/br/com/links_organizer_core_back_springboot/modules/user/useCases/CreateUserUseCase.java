@@ -2,7 +2,7 @@ package br.com.links_organizer_core_back_springboot.modules.user.useCases;
 
 import br.com.links_organizer_core_back_springboot.exceptions.UserFoundException;
 import br.com.links_organizer_core_back_springboot.modules.user.entities.UserEntity;
-import br.com.links_organizer_core_back_springboot.modules.user.model.dto.UserRegistrationResponseDto;
+import br.com.links_organizer_core_back_springboot.modules.user.model.dto.UserRegistrationResponseDTO;
 import br.com.links_organizer_core_back_springboot.modules.user.repositories.UserRepository;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -23,7 +23,7 @@ public class CreateUserUseCase {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public UserRegistrationResponseDto execute(UserEntity userEntity) {
+    public UserRegistrationResponseDTO execute(UserEntity userEntity) {
         this.userRepository.findByUserNameOrEmail(
                 userEntity.getUserName(),
                 userEntity.getEmail()
@@ -47,7 +47,7 @@ public class CreateUserUseCase {
                 .withExpiresAt(expiresIn)
                 .sign(algorithm);
 
-        return UserRegistrationResponseDto
+        return UserRegistrationResponseDTO
                 .builder()
                 .access_token(token)
                 .expires_in(expiresIn.toEpochMilli())
