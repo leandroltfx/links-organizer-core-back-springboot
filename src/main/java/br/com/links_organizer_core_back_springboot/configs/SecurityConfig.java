@@ -16,7 +16,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> {
                     // Rotas públicas
                     auth
-                            .requestMatchers("/user").permitAll();
+                            .requestMatchers("/user").permitAll()
+                            .requestMatchers("/login").permitAll();
                 });
         return httpSecurity.build();
     }
