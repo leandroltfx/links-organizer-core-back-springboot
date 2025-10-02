@@ -1,6 +1,7 @@
 package br.com.links_organizer_core_back_springboot.modules.login.controllers;
 
 import br.com.links_organizer_core_back_springboot.modules.login.dtos.LoginRequestDTO;
+import br.com.links_organizer_core_back_springboot.modules.login.dtos.LoginResponseDTO;
 import br.com.links_organizer_core_back_springboot.modules.login.useCases.LoginUseCase;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class LoginController {
     private LoginUseCase loginUseCase;
 
     @PostMapping
-    public ResponseEntity<Object> login(
+    public ResponseEntity<LoginResponseDTO> login(
             @Valid @RequestBody LoginRequestDTO loginRequestDTO
     ) throws AuthenticationException {
         return ResponseEntity.status(HttpStatus.OK).body(this.loginUseCase.execute(loginRequestDTO));
