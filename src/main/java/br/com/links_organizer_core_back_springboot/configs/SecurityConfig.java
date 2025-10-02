@@ -8,6 +8,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
+    private static final String[] SWAGGER_LIST = {
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/swagger-resource/**",
+    };
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         // Desabilitando as configurações padrão do Spring Security
@@ -17,7 +23,8 @@ public class SecurityConfig {
                     // Rotas públicas
                     auth
                             .requestMatchers("/user").permitAll()
-                            .requestMatchers("/login").permitAll();
+                            .requestMatchers("/login").permitAll()
+                            .requestMatchers(SWAGGER_LIST).permitAll();
                 });
         return httpSecurity.build();
     }
